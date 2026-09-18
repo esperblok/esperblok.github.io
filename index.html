@@ -7,11 +7,11 @@
 <link rel="icon" type="image/png" href="BLACK_HOLE_Logo_Transparant.png">
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700;800;900&display=swap');
-
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
+  body{background:#0a0a0a;font-family:'Rajdhani',sans-serif;color:#fff;overflow-x:hidden}
 
-  /* ========== LOADING SCREEN ========== */
+  /* LOADER */
   .loader{position:fixed;inset:0;z-index:9999;background:#0a0a0a;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .6s,visibility .6s}
   .loader.hidden{opacity:0;visibility:hidden;pointer-events:none}
   .loader-logo{width:120px;height:120px;filter:drop-shadow(0 0 30px rgba(196,30,106,.5));animation:pulse-load 1.5s ease-in-out infinite}
@@ -21,21 +21,19 @@
   @keyframes pulse-load{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.05);opacity:.7}}
   @keyframes load-fill{to{width:100%}}
 
-  /* ========== CURSOR GLOW ========== */
-  .cursor-glow{position:fixed;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(196,30,106,.07) 0%,transparent 70%);pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:left .15s ease-out,top .15s ease-out}
-
-  /* ========== PARTICLES ========== */
+  /* CURSOR GLOW */
+  .cursor-glow{position:fixed;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(196,30,106,.07) 0%,transparent 70%);pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:left .12s ease-out,top .12s ease-out}
   #particles-canvas{position:fixed;inset:0;z-index:0;pointer-events:none}
 
-  /* ========== NAVIGATION ========== */
-  nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(10,10,10,.85);backdrop-filter:blur(25px) saturate(1.5);border-bottom:1px solid rgba(196,30,106,.1);padding:0 0;transition:all .3s}
+  /* NAV */
+  nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(10,10,10,.85);backdrop-filter:blur(25px) saturate(1.5);border-bottom:1px solid rgba(196,30,106,.1);transition:all .3s}
   nav.scrolled{background:rgba(10,10,10,.95);box-shadow:0 5px 40px rgba(0,0,0,.5)}
   .nav-inner{max-width:1200px;margin:0 auto;padding:12px 30px;display:flex;justify-content:space-between;align-items:center}
   .nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none}
   .nav-logo img{width:38px;height:38px;filter:drop-shadow(0 0 8px rgba(196,30,106,.5));transition:transform .3s}
   .nav-logo:hover img{transform:rotate(10deg) scale(1.1)}
   .nav-logo span{font-family:'Cinzel Decorative',serif;font-size:16px;font-weight:700;color:#fff;letter-spacing:3px}
-  .nav-links{display:flex;gap:10px;list-style:none}
+  .nav-links{display:flex;gap:10px;list-style:none;align-items:center}
   .nav-links a{font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:3px;color:rgba(255,255,255,.45);text-decoration:none;text-transform:uppercase;padding:10px 16px;border-radius:4px;transition:all .3s;position:relative}
   .nav-links a::after{content:'';position:absolute;bottom:4px;left:50%;width:0;height:1px;background:#c41e6a;transition:all .3s;transform:translateX(-50%)}
   .nav-links a:hover{color:#fff;background:rgba(196,30,106,.08)}
@@ -48,7 +46,21 @@
   .nav-toggle.open span:nth-child(2){opacity:0}
   .nav-toggle.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
 
-  /* ========== HERO ========== */
+  /* AUDIO PLAYER */
+  .audio-player{display:flex;align-items:center;gap:10px;padding:6px 14px;background:rgba(196,30,106,.08);border:1px solid rgba(196,30,106,.15);border-radius:30px;cursor:pointer;transition:all .3s}
+  .audio-player:hover{background:rgba(196,30,106,.15);border-color:rgba(196,30,106,.3)}
+  .audio-player.playing{border-color:#c41e6a;box-shadow:0 0 15px rgba(196,30,106,.2)}
+  .audio-icon{width:20px;height:20px;display:flex;align-items:center;justify-content:center}
+  .audio-bars{display:flex;gap:2px;align-items:flex-end;height:16px}
+  .audio-bar{width:3px;background:#c41e6a;border-radius:2px;transition:height .15s}
+  .audio-player.playing .audio-bar:nth-child(1){animation:abar .6s ease-in-out infinite}
+  .audio-player.playing .audio-bar:nth-child(2){animation:abar .6s .1s ease-in-out infinite}
+  .audio-player.playing .audio-bar:nth-child(3){animation:abar .6s .2s ease-in-out infinite}
+  .audio-player.playing .audio-bar:nth-child(4){animation:abar .6s .15s ease-in-out infinite}
+  @keyframes abar{0%,100%{height:4px}50%{height:16px}}
+  .audio-label{font-family:'Orbitron',sans-serif;font-size:8px;letter-spacing:2px;color:rgba(196,30,106,.7);text-transform:uppercase}
+
+  /* HERO */
   .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;position:relative;overflow:hidden;padding:120px 20px 80px}
   .hero-bg{position:absolute;inset:0;background:url('Afbeelding1.png') center/cover no-repeat;filter:brightness(.3) saturate(1.4);z-index:0;transform:scale(1.1);animation:hero-zoom 20s ease-in-out infinite alternate}
   @keyframes hero-zoom{from{transform:scale(1.1)}to{transform:scale(1)}}
@@ -57,8 +69,13 @@
   .hero-glow-2{position:absolute;width:400px;height:400px;border-radius:50%;background:rgba(155,48,255,.05);filter:blur(120px);bottom:5%;right:-5%;z-index:1;animation:glow-float 8s ease-in-out infinite reverse}
   @keyframes glow-float{0%,100%{transform:translate(0,0)}50%{transform:translate(30px,-20px)}}
   .hero-content{position:relative;z-index:10}
-
-  /* Glitch effect */
+  .hero-deco{width:400px;height:2px;background:linear-gradient(90deg,transparent,#c41e6a,#9b30ff,#c41e6a,transparent);margin:0 auto 15px;animation:deco-glow 3s ease-in-out infinite}
+  @keyframes deco-glow{0%,100%{opacity:.6}50%{opacity:1}}
+  .hero-diamond{width:12px;height:12px;background:#c41e6a;transform:rotate(45deg);margin:0 auto 30px;box-shadow:0 0 15px #c41e6a,0 0 30px rgba(196,30,106,.5);animation:diamond-pulse 2s ease-in-out infinite}
+  @keyframes diamond-pulse{0%,100%{box-shadow:0 0 15px #c41e6a,0 0 30px rgba(196,30,106,.5)}50%{box-shadow:0 0 25px #c41e6a,0 0 50px rgba(196,30,106,.7)}}
+  .hero-logo{width:180px;height:180px;margin-bottom:30px;filter:drop-shadow(0 0 30px rgba(196,30,106,.4)) drop-shadow(0 0 60px rgba(155,48,255,.2));animation:logo-float 6s ease-in-out infinite}
+  @keyframes logo-float{0%,100%{transform:translateY(0) rotate(0deg)}25%{transform:translateY(-12px) rotate(1deg)}75%{transform:translateY(5px) rotate(-1deg)}}
+  .hero-subtitle{font-family:'Orbitron',sans-serif;font-size:14px;letter-spacing:14px;color:rgba(196,30,106,.8);text-transform:uppercase;margin-bottom:15px;opacity:0;animation:fadeUp .8s .5s forwards}
   .hero-title{font-family:'Cinzel Decorative',serif;font-size:clamp(50px,11vw,120px);font-weight:900;color:#fff;text-transform:uppercase;letter-spacing:8px;line-height:1;text-shadow:0 0 20px rgba(196,30,106,.6),0 0 60px rgba(155,48,255,.3),0 4px 20px rgba(0,0,0,.8);margin-bottom:10px;position:relative;animation:glitch-skew 4s infinite linear alternate-reverse}
   .hero-title::before,.hero-title::after{content:attr(data-text);position:absolute;top:0;left:0;width:100%;height:100%}
   .hero-title::before{animation:glitch-1 3s infinite linear alternate-reverse;clip-path:inset(40% 0 20% 0);color:#c41e6a;opacity:.7}
@@ -66,42 +83,35 @@
   @keyframes glitch-1{0%,95%{transform:translate(0)}96%{transform:translate(-3px,1px)}97%{transform:translate(2px,-1px)}98%{transform:translate(-1px,2px)}99%{transform:translate(3px,-2px)}100%{transform:translate(0)}}
   @keyframes glitch-2{0%,93%{transform:translate(0)}94%{transform:translate(2px,1px)}95%{transform:translate(-3px,-1px)}96%{transform:translate(1px,2px)}97%{transform:translate(-2px,-2px)}98%{transform:translate(3px,1px)}100%{transform:translate(0)}}
   @keyframes glitch-skew{0%,90%{transform:skew(0deg)}92%{transform:skew(.5deg)}94%{transform:skew(-.3deg)}96%{transform:skew(.2deg)}100%{transform:skew(0deg)}}
-
-  .hero-deco{width:400px;height:2px;background:linear-gradient(90deg,transparent,#c41e6a,#9b30ff,#c41e6a,transparent);margin:0 auto 15px;animation:deco-glow 3s ease-in-out infinite}
-  @keyframes deco-glow{0%,100%{opacity:.6;filter:brightness(1)}50%{opacity:1;filter:brightness(1.3)}}
-  .hero-diamond{width:12px;height:12px;background:#c41e6a;transform:rotate(45deg);margin:0 auto 30px;box-shadow:0 0 15px #c41e6a,0 0 30px rgba(196,30,106,.5);animation:diamond-pulse 2s ease-in-out infinite}
-  @keyframes diamond-pulse{0%,100%{box-shadow:0 0 15px #c41e6a,0 0 30px rgba(196,30,106,.5)}50%{box-shadow:0 0 25px #c41e6a,0 0 50px rgba(196,30,106,.7)}}
-  .hero-logo{width:180px;height:180px;margin-bottom:30px;filter:drop-shadow(0 0 30px rgba(196,30,106,.4)) drop-shadow(0 0 60px rgba(155,48,255,.2));animation:logo-float 6s ease-in-out infinite}
-  @keyframes logo-float{0%,100%{transform:translateY(0) rotate(0deg)}25%{transform:translateY(-12px) rotate(1deg)}75%{transform:translateY(5px) rotate(-1deg)}}
-  .hero-subtitle{font-family:'Orbitron',sans-serif;font-size:14px;letter-spacing:14px;color:rgba(196,30,106,.8);text-transform:uppercase;margin-bottom:15px;opacity:0;animation:fadeUp .8s .5s forwards}
   .hero-tagline{font-family:'Cinzel',serif;font-size:clamp(14px,2.5vw,24px);font-weight:400;letter-spacing:14px;color:rgba(255,255,255,.45);text-transform:uppercase;margin-bottom:50px;opacity:0;animation:fadeUp .8s .7s forwards}
   @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-  .hero-info{display:flex;justify-content:center;align-items:center;gap:40px;flex-wrap:wrap;margin-bottom:50px;opacity:0;animation:fadeUp .8s .9s forwards}
-  .hero-info-item{text-align:center;transition:transform .3s}
-  .hero-info-item:hover{transform:scale(1.05)}
-  .hero-info-label{font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:5px;color:rgba(196,30,106,.7);text-transform:uppercase;margin-bottom:6px}
-  .hero-info-value{font-family:'Cinzel',serif;font-size:28px;font-weight:700;color:#fff;letter-spacing:3px;text-shadow:0 0 15px rgba(196,30,106,.3)}
-  .hero-info-value.price{color:#c41e6a;font-size:36px;text-shadow:0 0 20px rgba(196,30,106,.5)}
-  .hero-separator{width:1px;height:50px;background:linear-gradient(180deg,transparent,rgba(196,30,106,.4),transparent)}
 
-  /* Countdown */
+  /* COUNTDOWN */
   .countdown{display:flex;gap:20px;margin-bottom:50px;opacity:0;animation:fadeUp .8s 1.1s forwards}
-  .countdown-item{text-align:center}
+  .countdown-item{text-align:center;cursor:pointer;transition:transform .3s}
+  .countdown-item:hover{transform:scale(1.1)}
   .countdown-num{font-family:'Orbitron',sans-serif;font-size:clamp(28px,5vw,48px);font-weight:900;color:#fff;min-width:70px;display:block;text-shadow:0 0 20px rgba(196,30,106,.4);position:relative}
   .countdown-num::after{content:'';position:absolute;bottom:-5px;left:50%;transform:translateX(-50%);width:30px;height:1px;background:rgba(196,30,106,.3)}
   .countdown-label{font-family:'Orbitron',sans-serif;font-size:9px;letter-spacing:3px;color:rgba(155,48,255,.5);text-transform:uppercase;margin-top:10px}
 
-  .hero-cta{display:inline-block;font-family:'Orbitron',sans-serif;font-size:12px;letter-spacing:4px;color:#fff;text-decoration:none;text-transform:uppercase;padding:16px 44px;border:1px solid rgba(196,30,106,.4);background:rgba(196,30,106,.08);transition:all .3s;position:relative;overflow:hidden;opacity:0;animation:fadeUp .8s 1.3s forwards}
+  .hero-info{display:flex;justify-content:center;align-items:center;gap:40px;flex-wrap:wrap;margin-bottom:50px;opacity:0;animation:fadeUp .8s .9s forwards}
+  .hero-info-item{text-align:center;transition:transform .3s;cursor:pointer}
+  .hero-info-item:hover{transform:scale(1.08)}
+  .hero-info-label{font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:5px;color:rgba(196,30,106,.7);text-transform:uppercase;margin-bottom:6px}
+  .hero-info-value{font-family:'Cinzel',serif;font-size:28px;font-weight:700;color:#fff;letter-spacing:3px;text-shadow:0 0 15px rgba(196,30,106,.3)}
+  .hero-info-value.price{color:#c41e6a;font-size:36px}
+  .hero-separator{width:1px;height:50px;background:linear-gradient(180deg,transparent,rgba(196,30,106,.4),transparent)}
+  .hero-cta{display:inline-block;font-family:'Orbitron',sans-serif;font-size:12px;letter-spacing:4px;color:#fff;text-decoration:none;text-transform:uppercase;padding:16px 44px;border:1px solid rgba(196,30,106,.4);background:rgba(196,30,106,.08);transition:all .3s;position:relative;overflow:hidden;opacity:0;animation:fadeUp .8s 1.3s forwards;cursor:pointer}
   .hero-cta::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(196,30,106,.15),transparent);transition:left .5s}
   .hero-cta:hover::before{left:100%}
-  .hero-cta:hover{border-color:#c41e6a;background:rgba(196,30,106,.2);box-shadow:0 0 40px rgba(196,30,106,.25),inset 0 0 40px rgba(196,30,106,.05)}
+  .hero-cta:hover{border-color:#c41e6a;background:rgba(196,30,106,.2);box-shadow:0 0 40px rgba(196,30,106,.25)}
 
   .hero-scroll{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);z-index:10;display:flex;flex-direction:column;align-items:center;gap:6px;opacity:0;animation:fadeUp .8s 1.5s forwards}
   .hero-scroll span{font-family:'Orbitron',sans-serif;font-size:8px;letter-spacing:4px;color:rgba(196,30,106,.35);text-transform:uppercase}
   .scroll-line{width:1px;height:40px;background:linear-gradient(180deg,rgba(196,30,106,.4),transparent);animation:scroll-anim 2s ease-in-out infinite}
   @keyframes scroll-anim{0%{opacity:0;transform:scaleY(0);transform-origin:top}50%{opacity:1;transform:scaleY(1)}100%{opacity:0;transform:scaleY(0);transform-origin:bottom}}
 
-  /* ========== SECTION STYLES ========== */
+  /* SECTIONS */
   section{padding:100px 20px;position:relative}
   .section-container{max-width:1100px;margin:0 auto}
   .section-header{text-align:center;margin-bottom:70px}
@@ -109,13 +119,14 @@
   .section-deco::after{content:'◆';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:#c41e6a;font-size:10px;background:#0a0a0a;padding:0 15px;text-shadow:0 0 10px #c41e6a}
   .section-label{font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:10px;color:rgba(155,48,255,.7);text-transform:uppercase;margin-bottom:15px}
   .section-title{font-family:'Cinzel Decorative',serif;font-size:clamp(30px,5vw,52px);font-weight:900;color:#fff;letter-spacing:6px;text-shadow:0 0 20px rgba(196,30,106,.3)}
-
-  /* Reveal animation */
   .reveal{opacity:0;transform:translateY(40px);transition:opacity .8s,transform .8s}
   .reveal.visible{opacity:1;transform:translateY(0)}
 
-  /* ========== LINEUP ========== */
+  /* LINEUP */
   #lineup{background:linear-gradient(180deg,#0a0a0a 0%,#0d0a12 50%,#0a0a0a 100%)}
+  .lineup-filters{display:flex;justify-content:center;gap:10px;margin-bottom:40px;flex-wrap:wrap}
+  .lineup-filter{font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:2px;padding:8px 20px;border:1px solid rgba(196,30,106,.15);background:transparent;color:rgba(255,255,255,.4);border-radius:20px;cursor:pointer;transition:all .3s;text-transform:uppercase}
+  .lineup-filter:hover,.lineup-filter.active{color:#fff;border-color:#c41e6a;background:rgba(196,30,106,.12);box-shadow:0 0 15px rgba(196,30,106,.15)}
   .lineup-timeline{max-width:700px;margin:0 auto;position:relative}
   .lineup-timeline::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:1px;background:linear-gradient(180deg,transparent,rgba(196,30,106,.2),rgba(155,48,255,.2),rgba(196,30,106,.2),transparent);transform:translateX(-50%)}
   .lineup-item{display:flex;align-items:center;gap:40px;padding:30px 0;position:relative;cursor:pointer;transition:all .3s}
@@ -136,14 +147,15 @@
   .lineup-feat{font-family:'Orbitron',sans-serif;font-size:9px;letter-spacing:4px;color:rgba(196,30,106,.6);text-transform:uppercase;margin-bottom:6px}
   .lineup-time{font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:3px;color:rgba(155,48,255,.45);margin-top:8px}
   .lineup-expand{max-height:0;overflow:hidden;transition:max-height .4s}
-  .lineup-item.open .lineup-expand{max-height:200px}
+  .lineup-item.open .lineup-expand{max-height:300px}
   .lineup-desc{font-family:'Rajdhani',sans-serif;font-size:15px;color:rgba(255,255,255,.4);margin-top:12px;line-height:1.6}
   .lineup-placeholder{flex:1}
+  .lineup-genre{display:inline-block;font-family:'Orbitron',sans-serif;font-size:8px;letter-spacing:2px;padding:3px 10px;border-radius:10px;border:1px solid rgba(196,30,106,.2);color:rgba(196,30,106,.6);margin-top:8px;text-transform:uppercase}
 
-  /* ========== INFO ========== */
+  /* INFO */
   #info{background:#0a0a0a}
   .info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:30px}
-  .info-card{background:rgba(196,30,106,.03);border:1px solid rgba(196,30,106,.1);border-radius:10px;padding:40px 30px;text-align:center;transition:all .4s;position:relative;overflow:hidden}
+  .info-card{background:rgba(196,30,106,.03);border:1px solid rgba(196,30,106,.1);border-radius:10px;padding:40px 30px;text-align:center;transition:all .4s;position:relative;overflow:hidden;cursor:pointer}
   .info-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#c41e6a,#9b30ff,transparent);opacity:0;transition:opacity .3s}
   .info-card:hover{border-color:rgba(196,30,106,.3);background:rgba(196,30,106,.06);transform:translateY(-8px);box-shadow:0 15px 50px rgba(196,30,106,.1)}
   .info-card:hover::before{opacity:1}
@@ -154,7 +166,7 @@
   .info-card-value .highlight{color:#c41e6a}
   .info-card-sub{font-size:14px;color:rgba(255,255,255,.35);margin-top:8px}
 
-  /* ========== MAP ========== */
+  /* MAP */
   #locatie{background:linear-gradient(180deg,#0a0a0a 0%,#0d0a12 50%,#0a0a0a 100%)}
   .map-container{max-width:800px;margin:0 auto;border-radius:12px;overflow:hidden;border:1px solid rgba(196,30,106,.15);position:relative}
   .map-container iframe{width:100%;height:400px;border:0;filter:grayscale(.8) brightness(.7) contrast(1.1) hue-rotate(300deg);transition:filter .5s}
@@ -163,22 +175,73 @@
   .map-address{font-family:'Cinzel',serif;font-size:20px;font-weight:700;color:#fff;letter-spacing:3px;margin-bottom:5px}
   .map-detail{font-family:'Rajdhani',sans-serif;font-size:15px;color:rgba(255,255,255,.4);letter-spacing:1px}
 
-  /* ========== HUISREGELS ========== */
-  #regels{background:#0a0a0a}
-  .rules-container{max-width:800px;margin:0 auto}
-  .rules-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px}
-  .rule-item{display:flex;align-items:center;gap:16px;padding:18px 22px;background:rgba(196,30,106,.02);border:1px solid rgba(196,30,106,.06);border-radius:6px;transition:all .3s;cursor:default}
-  .rule-item:hover{border-color:rgba(196,30,106,.2);background:rgba(196,30,106,.05);transform:translateX(5px)}
-  .rule-num{font-family:'Orbitron',sans-serif;font-size:10px;color:rgba(196,30,106,.4);min-width:25px}
-  .rule-text{font-family:'Rajdhani',sans-serif;font-size:16px;color:rgba(255,255,255,.55);letter-spacing:1px}
+  /* GALLERY */
+  #gallery{background:#0a0a0a}
+  .gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+  .gallery-item{position:relative;border-radius:10px;overflow:hidden;aspect-ratio:16/10;cursor:pointer;border:1px solid rgba(196,30,106,.08);transition:all .4s}
+  .gallery-item:hover{border-color:rgba(196,30,106,.3);transform:scale(1.02);box-shadow:0 10px 40px rgba(196,30,106,.15)}
+  .gallery-item img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+  .gallery-item:hover img{transform:scale(1.1)}
+  .gallery-item .gallery-overlay{position:absolute;inset:0;background:linear-gradient(transparent 50%,rgba(10,10,10,.9));display:flex;align-items:flex-end;padding:20px;opacity:0;transition:opacity .3s}
+  .gallery-item:hover .gallery-overlay{opacity:1}
+  .gallery-caption{font-family:'Cinzel',serif;font-size:14px;color:#fff;letter-spacing:2px}
+  .gallery-tag{font-family:'Orbitron',sans-serif;font-size:8px;letter-spacing:2px;color:rgba(196,30,106,.7);text-transform:uppercase;margin-top:5px}
+  .lightbox{position:fixed;inset:0;z-index:3000;background:rgba(0,0,0,.95);display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:all .3s;cursor:pointer}
+  .lightbox.active{opacity:1;visibility:visible}
+  .lightbox img{max-width:90%;max-height:85vh;border-radius:8px;box-shadow:0 0 60px rgba(196,30,106,.2);transform:scale(.9);transition:transform .3s}
+  .lightbox.active img{transform:scale(1)}
+  .lightbox-close{position:absolute;top:30px;right:30px;font-size:40px;color:rgba(255,255,255,.5);cursor:pointer;transition:color .3s;background:none;border:none}
+  .lightbox-close:hover{color:#c41e6a}
+  .lightbox-nav{position:absolute;top:50%;font-size:50px;color:rgba(255,255,255,.3);cursor:pointer;transition:color .3s;background:none;border:none;padding:20px}
+  .lightbox-nav:hover{color:#c41e6a}
+  .lightbox-prev{left:20px}
+  .lightbox-next{right:20px}
+  .lightbox-counter{position:absolute;bottom:30px;font-family:'Orbitron',sans-serif;font-size:12px;color:rgba(255,255,255,.3);letter-spacing:3px}
 
-  /* ========== TICKETS ========== */
+  /* HUISREGELS */
+  #regels{background:linear-gradient(180deg,#0a0a0a 0%,#0d0a12 50%,#0a0a0a 100%)}
+  .rules-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px;max-width:800px;margin:0 auto}
+  .rule-item{display:flex;align-items:center;gap:16px;padding:18px 22px;background:rgba(196,30,106,.02);border:1px solid rgba(196,30,106,.06);border-radius:6px;transition:all .3s;cursor:pointer}
+  .rule-item:hover{border-color:rgba(196,30,106,.2);background:rgba(196,30,106,.05);transform:translateX(5px)}
+  .rule-item.checked{border-color:rgba(196,30,106,.3);background:rgba(196,30,106,.06)}
+  .rule-check{width:22px;height:22px;border:1px solid rgba(196,30,106,.3);border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .3s;font-size:12px;color:transparent}
+  .rule-item.checked .rule-check{background:#c41e6a;border-color:#c41e6a;color:#fff}
+  .rule-text{font-family:'Rajdhani',sans-serif;font-size:16px;color:rgba(255,255,255,.55);letter-spacing:1px}
+  .rule-item.checked .rule-text{color:rgba(255,255,255,.3);text-decoration:line-through}
+  .rules-progress{max-width:800px;margin:30px auto 0;text-align:center}
+  .rules-progress-bar{width:100%;height:4px;background:rgba(196,30,106,.1);border-radius:2px;overflow:hidden;margin-bottom:10px}
+  .rules-progress-fill{height:100%;background:linear-gradient(90deg,#c41e6a,#9b30ff);width:0%;transition:width .4s;border-radius:2px}
+  .rules-progress-text{font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:3px;color:rgba(196,30,106,.5)}
+
+  /* FAQ */
+  #faq{background:#0a0a0a}
+  .faq-container{max-width:700px;margin:0 auto}
+  .faq-item{border:1px solid rgba(196,30,106,.08);border-radius:8px;margin-bottom:12px;overflow:hidden;transition:all .3s}
+  .faq-item:hover{border-color:rgba(196,30,106,.2)}
+  .faq-item.open{border-color:rgba(196,30,106,.25);background:rgba(196,30,106,.03)}
+  .faq-question{display:flex;justify-content:space-between;align-items:center;padding:20px 25px;cursor:pointer;transition:background .3s}
+  .faq-question:hover{background:rgba(196,30,106,.04)}
+  .faq-q-text{font-family:'Cinzel',serif;font-size:16px;font-weight:700;color:#fff;letter-spacing:1px}
+  .faq-arrow{width:20px;height:20px;display:flex;align-items:center;justify-content:center;color:#c41e6a;transition:transform .3s;font-size:14px}
+  .faq-item.open .faq-arrow{transform:rotate(180deg)}
+  .faq-answer{max-height:0;overflow:hidden;transition:max-height .4s ease,padding .4s}
+  .faq-item.open .faq-answer{max-height:300px;padding:0 25px 20px}
+  .faq-a-text{font-family:'Rajdhani',sans-serif;font-size:15px;color:rgba(255,255,255,.45);line-height:1.7}
+
+  /* TICKETS */
   #tickets{background:linear-gradient(180deg,#0a0a0a 0%,#12081a 50%,#0a0a0a 100%);text-align:center}
   .tickets-box{max-width:550px;margin:0 auto;padding:60px 40px;border:1px solid rgba(196,30,106,.2);border-radius:14px;background:rgba(196,30,106,.03);position:relative;overflow:hidden}
   .tickets-box::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#c41e6a,#9b30ff,#c41e6a,transparent)}
-  .tickets-box::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at top,rgba(196,30,106,.05) 0%,transparent 60%);pointer-events:none}
+  .tickets-remaining{font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:3px;color:rgba(196,30,106,.6);text-transform:uppercase;margin-bottom:15px}
+  .tickets-remaining-num{color:#c41e6a;font-size:18px;font-weight:700}
   .tickets-price{font-family:'Cinzel',serif;font-size:clamp(42px,8vw,60px);font-weight:900;color:#c41e6a;text-shadow:0 0 30px rgba(196,30,106,.4);margin-bottom:8px}
-  .tickets-per{font-family:'Rajdhani',sans-serif;font-size:16px;color:rgba(255,255,255,.35);margin-bottom:35px}
+  .tickets-per{font-family:'Rajdhani',sans-serif;font-size:16px;color:rgba(255,255,255,.35);margin-bottom:25px}
+  .ticket-qty{display:flex;align-items:center;justify-content:center;gap:20px;margin-bottom:30px}
+  .ticket-qty-btn{width:44px;height:44px;border-radius:50%;border:1px solid rgba(196,30,106,.3);background:rgba(196,30,106,.08);color:#c41e6a;font-size:22px;cursor:pointer;transition:all .3s;display:flex;align-items:center;justify-content:center}
+  .ticket-qty-btn:hover{background:rgba(196,30,106,.2);border-color:#c41e6a;transform:scale(1.1)}
+  .ticket-qty-num{font-family:'Orbitron',sans-serif;font-size:36px;font-weight:900;color:#fff;min-width:50px;text-align:center}
+  .ticket-total{font-family:'Cinzel',serif;font-size:20px;color:rgba(255,255,255,.5);margin-bottom:25px}
+  .ticket-total .total-price{color:#c41e6a;font-size:28px;font-weight:900}
   .tickets-features{list-style:none;margin-bottom:35px}
   .tickets-features li{font-family:'Rajdhani',sans-serif;font-size:15px;color:rgba(255,255,255,.45);padding:8px 0;border-bottom:1px solid rgba(196,30,106,.05);letter-spacing:1px}
   .tickets-features li::before{content:'✓ ';color:#c41e6a;font-weight:bold}
@@ -192,11 +255,28 @@
   .tickets-qr img:hover{transform:scale(1.1) rotate(3deg)}
   .tickets-qr-label{font-family:'Orbitron',sans-serif;font-size:8px;letter-spacing:3px;color:rgba(196,30,106,.45);text-transform:uppercase;margin-top:10px}
 
-  /* ========== MODAL ========== */
+  /* NEWSLETTER */
+  #newsletter{background:#0a0a0a;text-align:center}
+  .newsletter-box{max-width:500px;margin:0 auto;padding:50px 40px;border:1px solid rgba(196,30,106,.12);border-radius:12px;background:rgba(196,30,106,.02)}
+  .newsletter-desc{font-family:'Rajdhani',sans-serif;font-size:16px;color:rgba(255,255,255,.4);margin-bottom:25px}
+  .newsletter-form{display:flex;gap:10px;max-width:400px;margin:0 auto}
+  .newsletter-input{flex:1;padding:14px 18px;background:rgba(196,30,106,.05);border:1px solid rgba(196,30,106,.15);border-radius:6px;color:#fff;font-family:'Rajdhani',sans-serif;font-size:16px;outline:none;transition:border-color .3s}
+  .newsletter-input:focus{border-color:#c41e6a}
+  .newsletter-btn{padding:14px 24px;font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:2px;color:#fff;text-transform:uppercase;border:1px solid #c41e6a;background:rgba(196,30,106,.15);cursor:pointer;transition:all .3s;border-radius:6px;white-space:nowrap}
+  .newsletter-btn:hover{background:rgba(196,30,106,.3)}
+  .newsletter-success{display:none;font-family:'Cinzel',serif;font-size:16px;color:#c41e6a;margin-top:15px}
+  .newsletter-success.show{display:block;animation:fadeUp .5s}
+
+  /* SHARE */
+  .share-bar{display:flex;justify-content:center;gap:15px;margin-top:40px}
+  .share-btn{width:44px;height:44px;border-radius:50%;border:1px solid rgba(196,30,106,.15);background:rgba(196,30,106,.05);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .3s;color:rgba(255,255,255,.4);font-size:16px;text-decoration:none}
+  .share-btn:hover{border-color:#c41e6a;background:rgba(196,30,106,.15);color:#fff;transform:translateY(-3px);box-shadow:0 5px 20px rgba(196,30,106,.2)}
+
+  /* MODAL */
   .modal-overlay{position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,.85);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:all .3s}
   .modal-overlay.active{opacity:1;visibility:visible}
-  .modal{background:#111;border:1px solid rgba(196,30,106,.2);border-radius:14px;padding:50px 40px;max-width:450px;width:90%;position:relative;transform:scale(.9);transition:transform .3s;text-align:center}
-  .modal-overlay.active .modal{transform:scale(1)}
+  .modal{background:#111;border:1px solid rgba(196,30,106,.2);border-radius:14px;padding:50px 40px;max-width:450px;width:90%;position:relative;transform:scale(.9) translateY(20px);transition:transform .4s;text-align:center}
+  .modal-overlay.active .modal{transform:scale(1) translateY(0)}
   .modal-close{position:absolute;top:15px;right:20px;font-size:28px;color:rgba(255,255,255,.3);cursor:pointer;transition:color .3s;background:none;border:none}
   .modal-close:hover{color:#c41e6a}
   .modal-title{font-family:'Cinzel Decorative',serif;font-size:28px;color:#fff;margin-bottom:10px}
@@ -208,9 +288,15 @@
   .modal-success{display:none;font-family:'Cinzel',serif;font-size:20px;color:#c41e6a;margin-top:20px}
   .modal-success.show{display:block;animation:fadeUp .5s}
 
-  /* ========== FOOTER ========== */
-  footer{padding:60px 20px;text-align:center;border-top:1px solid rgba(196,30,106,.08);background:#080808;position:relative}
-  .footer-logo{width:70px;height:70px;margin:0 auto 20px;filter:drop-shadow(0 0 12px rgba(196,30,106,.3));transition:transform .3s}
+  /* EASTER EGG */
+  .easter-egg{position:fixed;bottom:80px;left:30px;z-index:999;display:flex;align-items:center;gap:10px;padding:10px 18px;background:rgba(10,10,10,.9);border:1px solid rgba(196,30,106,.2);border-radius:8px;cursor:pointer;opacity:0;visibility:hidden;transition:all .3s;backdrop-filter:blur(10px)}
+  .easter-egg.visible{opacity:1;visibility:visible}
+  .easter-egg:hover{border-color:#c41e6a;background:rgba(196,30,106,.1)}
+  .easter-egg-text{font-family:'Orbitron',sans-serif;font-size:8px;letter-spacing:2px;color:rgba(196,30,106,.6);text-transform:uppercase}
+
+  /* FOOTER */
+  footer{padding:60px 20px;text-align:center;border-top:1px solid rgba(196,30,106,.08);background:#080808}
+  .footer-logo{width:70px;height:70px;margin:0 auto 20px;filter:drop-shadow(0 0 12px rgba(196,30,106,.3));transition:transform .3s;cursor:pointer}
   .footer-logo:hover{transform:rotate(10deg) scale(1.1)}
   .footer-url{font-family:'Orbitron',sans-serif;font-size:12px;letter-spacing:4px;color:rgba(155,48,255,.5);margin-bottom:8px}
   .footer-socials{font-family:'Rajdhani',sans-serif;font-size:14px;letter-spacing:3px;color:rgba(255,255,255,.25);margin-bottom:25px}
@@ -220,18 +306,23 @@
   .footer-deco .dot{width:5px;height:5px;background:#c41e6a;border-radius:50%;box-shadow:0 0 6px #c41e6a}
   .footer-copy{font-size:12px;color:rgba(255,255,255,.15);letter-spacing:2px}
 
-  /* ========== BACK TO TOP ========== */
+  /* BACK TO TOP */
   .back-to-top{position:fixed;bottom:30px;right:30px;width:50px;height:50px;border-radius:50%;background:rgba(196,30,106,.15);border:1px solid rgba(196,30,106,.3);display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:999;opacity:0;visibility:hidden;transition:all .3s;backdrop-filter:blur(10px)}
   .back-to-top.visible{opacity:1;visibility:visible}
   .back-to-top:hover{background:rgba(196,30,106,.3);transform:translateY(-3px);box-shadow:0 5px 20px rgba(196,30,106,.2)}
   .back-to-top svg{width:20px;height:20px;fill:none;stroke:#c41e6a;stroke-width:2}
 
-  /* ========== RESPONSIVE ========== */
+  /* TOAST */
+  .toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%) translateY(20px);padding:14px 28px;background:rgba(10,10,10,.95);border:1px solid rgba(196,30,106,.3);border-radius:8px;font-family:'Rajdhani',sans-serif;font-size:15px;color:#fff;letter-spacing:1px;z-index:5000;opacity:0;visibility:hidden;transition:all .4s;backdrop-filter:blur(10px);pointer-events:none}
+  .toast.show{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+
+  /* RESPONSIVE */
   @media(max-width:768px){
     .nav-links{display:none}
     .nav-toggle{display:flex}
     .nav-links.active{display:flex;flex-direction:column;position:absolute;top:100%;left:0;right:0;background:rgba(10,10,10,.98);padding:25px 30px;gap:8px;border-bottom:1px solid rgba(196,30,106,.1);backdrop-filter:blur(20px)}
     .nav-links a{padding:12px 16px;font-size:11px}
+    .audio-player{display:none}
     .hero-info{flex-direction:column;gap:20px}
     .hero-separator{width:50px;height:1px;background:linear-gradient(90deg,transparent,rgba(196,30,106,.4),transparent)}
     .countdown{gap:12px}
@@ -240,6 +331,7 @@
     .lineup-dot{position:absolute;left:13px;top:35px}
     .lineup-placeholder{display:none}
     .lineup-card{text-align:center!important}
+    .newsletter-form{flex-direction:column}
     section{padding:70px 20px}
   }
   @media(max-width:480px){
@@ -249,40 +341,50 @@
     .hero-tagline{letter-spacing:5px;font-size:12px}
     .tickets-box{padding:35px 20px}
     .rules-grid{grid-template-columns:1fr}
+    .gallery-grid{grid-template-columns:1fr}
   }
 </style>
 </head>
 <body>
 
-<!-- LOADING SCREEN -->
 <div class="loader" id="loader">
   <img class="loader-logo" src="BLACK_HOLE_Logo_Transparant.png" alt="">
   <div class="loader-bar"><div class="loader-fill"></div></div>
   <div class="loader-text">Entering the void</div>
 </div>
 
-<!-- CURSOR GLOW -->
 <div class="cursor-glow" id="cursorGlow"></div>
-
-<!-- PARTICLES -->
 <canvas id="particles-canvas"></canvas>
 
-<!-- NAVIGATION -->
+<!-- NAV -->
 <nav id="navbar">
   <div class="nav-inner">
     <a href="#home" class="nav-logo">
       <img src="BLACK_HOLE_Logo_Transparant.png" alt="BLACK HOLE">
       <span>BLACK HOLE</span>
     </a>
-    <button class="nav-toggle" id="navToggle">
-      <span></span><span></span><span></span>
-    </button>
+    <button class="nav-toggle" id="navToggle"><span></span><span></span><span></span></button>
     <ul class="nav-links" id="navLinks">
       <li><a href="#lineup">Line-Up</a></li>
       <li><a href="#info">Info</a></li>
       <li><a href="#locatie">Locatie</a></li>
+      <li><a href="#gallery">Gallery</a></li>
       <li><a href="#regels">Regels</a></li>
+      <li><a href="#faq">FAQ</a></li>
       <li><a href="#tickets">Tickets</a></li>
+      <li>
+        <div class="audio-player" id="audioPlayer" title="Klik om muziek aan/uit te zetten">
+          <div class="audio-icon">
+            <div class="audio-bars">
+              <div class="audio-bar" style="height:6px"></div>
+              <div class="audio-bar" style="height:12px"></div>
+              <div class="audio-bar" style="height:8px"></div>
+              <div class="audio-bar" style="height:14px"></div>
+            </div>
+          </div>
+          <span class="audio-label">Sound</span>
+        </div>
+      </li>
     </ul>
   </div>
 </nav>
@@ -300,24 +402,26 @@
     <div class="hero-subtitle">Festival</div>
     <h1 class="hero-title" data-text="BLACK HOLE">BLACK HOLE</h1>
     <p class="hero-tagline">A New Dimension of Sound</p>
-
-    <!-- Countdown -->
     <div class="countdown" id="countdown">
       <div class="countdown-item"><span class="countdown-num" id="cd-days">000</span><div class="countdown-label">Dagen</div></div>
       <div class="countdown-item"><span class="countdown-num" id="cd-hours">00</span><div class="countdown-label">Uren</div></div>
       <div class="countdown-item"><span class="countdown-num" id="cd-mins">00</span><div class="countdown-label">Minuten</div></div>
       <div class="countdown-item"><span class="countdown-num" id="cd-secs">00</span><div class="countdown-label">Seconden</div></div>
     </div>
-
     <div class="hero-info">
-      <div class="hero-info-item"><div class="hero-info-label">Datum</div><div class="hero-info-value">14 / 09 / 32</div></div>
+      <div class="hero-info-item" onclick="copyToClipboard('14 September 2032')"><div class="hero-info-label">Datum</div><div class="hero-info-value">14 / 09 / 32</div></div>
       <div class="hero-separator"></div>
-      <div class="hero-info-item"><div class="hero-info-label">Locatie</div><div class="hero-info-value">Dordrecht</div></div>
+      <div class="hero-info-item" onclick="window.open('https://maps.google.com/?q=Dordrecht+Centrumplein')"><div class="hero-info-label">Locatie</div><div class="hero-info-value">Dordrecht</div></div>
       <div class="hero-separator"></div>
       <div class="hero-info-item"><div class="hero-info-label">Entree</div><div class="hero-info-value price">&euro; 64</div></div>
     </div>
-
     <a href="#tickets" class="hero-cta">Koop Tickets</a>
+    <div class="share-bar">
+      <a class="share-btn" href="https://www.facebook.com/sharer/sharer.php?u=" target="_blank" title="Facebook">f</a>
+      <a class="share-btn" href="https://twitter.com/intent/tweet?text=BLACK%20HOLE%20Festival%202032&url=" target="_blank" title="Twitter">X</a>
+      <a class="share-btn" href="https://wa.me/?text=BLACK%20HOLE%20Festival%202032%20-%20Check%20dit!" target="_blank" title="WhatsApp">&#9743;</a>
+      <a class="share-btn" onclick="copyToClipboard(window.location.href)" title="Kopieer link">&#128279;</a>
+    </div>
   </div>
   <div class="hero-scroll"><span>Scroll</span><div class="scroll-line"></div></div>
 </section>
@@ -330,59 +434,64 @@
       <div class="section-label">Line-Up</div>
       <h2 class="section-title">ARTIESTEN</h2>
     </div>
-    <div class="lineup-timeline">
-
-      <div class="lineup-item headliner reveal" onclick="this.classList.toggle('open')">
+    <div class="lineup-filters reveal">
+      <button class="lineup-filter active" data-filter="all">Alle</button>
+      <button class="lineup-filter" data-filter="rock">Rock</button>
+      <button class="lineup-filter" data-filter="metal">Metal</button>
+      <button class="lineup-filter" data-filter="electronic">Elektronisch</button>
+    </div>
+    <div class="lineup-timeline" id="lineupTimeline">
+      <div class="lineup-item headliner reveal" data-genre="metal" onclick="this.classList.toggle('open')">
         <div class="lineup-card">
           <div class="lineup-artist headliner">TX2</div>
           <div class="lineup-time">21:00 &mdash; 22:30</div>
-          <div class="lineup-expand"><div class="lineup-desc">De headliner van de avond. TX2 brengt een onvergetelijke show met extreme energie en meeslepende geluiden.</div></div>
+          <div class="lineup-genre">Metal / Hardcore</div>
+          <div class="lineup-expand"><div class="lineup-desc">De headliner van de avond. TX2 brengt een onvergetelijke show met extreme energie en meeslepende geluiden. Verwacht vuur, rook en een ervaring die je nooit zult vergeten.</div></div>
         </div>
         <div class="lineup-dot"></div>
         <div class="lineup-placeholder"></div>
       </div>
-
-      <div class="lineup-item reveal" onclick="this.classList.toggle('open')">
+      <div class="lineup-item reveal" data-genre="rock" onclick="this.classList.toggle('open')">
         <div class="lineup-card">
           <div class="lineup-artist regular">AC/DC</div>
           <div class="lineup-time">22:45 &mdash; 00:15</div>
-          <div class="lineup-expand"><div class="lineup-desc">Legendarische rock sound die de hele nacht zal weergalmen.</div></div>
+          <div class="lineup-genre">Classic Rock</div>
+          <div class="lineup-expand"><div class="lineup-desc">Legendarische rock sound die de hele nacht zal weergalmen. Thunderstruck, Back in Black en meer klassiekers live.</div></div>
         </div>
         <div class="lineup-dot"></div>
         <div class="lineup-placeholder"></div>
       </div>
-
-      <div class="lineup-item reveal" onclick="this.classList.toggle('open')">
+      <div class="lineup-item reveal" data-genre="electronic" onclick="this.classList.toggle('open')">
         <div class="lineup-card">
           <div class="lineup-artist special">Meteleca</div>
           <div class="lineup-time">19:30 &mdash; 20:45</div>
-          <div class="lineup-expand"><div class="lineup-desc">Elektronische vibes die je in een andere dimensie brengen.</div></div>
+          <div class="lineup-genre">Elektronisch</div>
+          <div class="lineup-expand"><div class="lineup-desc">Elektronische vibes die je in een andere dimensie brengen. Een set vol deep house, techno en melodische klanken.</div></div>
         </div>
         <div class="lineup-dot"></div>
         <div class="lineup-placeholder"></div>
       </div>
-
-      <div class="lineup-item reveal" onclick="this.classList.toggle('open')">
+      <div class="lineup-item reveal" data-genre="electronic" onclick="this.classList.toggle('open')">
         <div class="lineup-card">
           <div class="lineup-artist regular">Tiesto</div>
           <div class="lineup-time">00:30 &mdash; 02:00</div>
-          <div class="lineup-expand"><div class="lineup-desc">Deaf DJ Tiesto sluit de nacht af met een knaller.</div></div>
+          <div class="lineup-genre">DJ / Elektronisch</div>
+          <div class="lineup-expand"><div class="lineup-desc">DJ Tiesto sluit de nacht af met een knaller. Verwacht de allergrootste hits en een spectaculaire lichtshow.</div></div>
         </div>
         <div class="lineup-dot"></div>
         <div class="lineup-placeholder"></div>
       </div>
-
-      <div class="lineup-item reveal" onclick="this.classList.toggle('open')">
+      <div class="lineup-item reveal" data-genre="rock" onclick="this.classList.toggle('open')">
         <div class="lineup-card">
           <div class="lineup-feat">Special Guest</div>
           <div class="lineup-artist special">Guns of Rosos</div>
           <div class="lineup-time">20:45 &mdash; 21:00</div>
-          <div class="lineup-expand"><div class="lineup-desc">Een verrassingsoptreden die je niet wilt missen!</div></div>
+          <div class="lineup-genre">Rock / Cover</div>
+          <div class="lineup-expand"><div class="lineup-desc">Een verrassingsoptreden die je niet wilt missen! Guns N' Roses covers op het hoogste niveau.</div></div>
         </div>
         <div class="lineup-dot"></div>
         <div class="lineup-placeholder"></div>
       </div>
-
     </div>
   </div>
 </section>
@@ -396,16 +505,16 @@
       <h2 class="section-title">PRAKTISCHE INFO</h2>
     </div>
     <div class="info-grid">
-      <div class="info-card reveal">
+      <div class="info-card reveal" onclick="copyToClipboard('14 September 2032, 18:00')">
         <div class="info-card-icon">📅</div>
         <div class="info-card-label">Datum & Tijd</div>
         <div class="info-card-value">Zaterdag <span class="highlight">14 September 2032</span><br>Deuren open: <span class="highlight">18:00</span><br>Aanvang: <span class="highlight">19:00</span></div>
       </div>
-      <div class="info-card reveal">
+      <div class="info-card reveal" onclick="window.open('https://maps.google.com/?q=Dordrecht+Centrumplein')">
         <div class="info-card-icon">📍</div>
         <div class="info-card-label">Locatie</div>
         <div class="info-card-value">Dordrecht<br>Centrumplein</div>
-        <div class="info-card-sub">Centrum, Dordrecht</div>
+        <div class="info-card-sub">Klik om te openen in Google Maps</div>
       </div>
       <div class="info-card reveal">
         <div class="info-card-icon">🎵</div>
@@ -429,8 +538,24 @@
       <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2450.123456789!2d4.69!3d51.81!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNTHCsDQ4JzM2LjAiTiA0wrA0MScyNC4wIkU!5e0!3m2!1snl!2snl!4v1" allowfullscreen loading="lazy"></iframe>
       <div class="map-overlay">
         <div class="map-address">Dordrecht Centrumplein</div>
-        <div class="map-detail">Centrum, Dordrecht &bull; Open in Google Maps</div>
+        <div class="map-detail">Centrum, Dordrecht &bull; Klik voor route</div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="section-container">
+    <div class="section-header reveal">
+      <div class="section-deco"></div>
+      <div class="section-label">Gallery</div>
+      <h2 class="section-title">FOTO'S</h2>
+    </div>
+    <div class="gallery-grid reveal" id="galleryGrid">
+      <div class="gallery-item" onclick="openLightbox(0)"><img src="Afbeelding1.png" alt="Festival"><div class="gallery-overlay"><div><div class="gallery-caption">Festival Sfeer</div><div class="gallery-tag">2024</div></div></div></div>
+      <div class="gallery-item" onclick="openLightbox(1)"><img src="BLACK_HOLE_Logo.png" alt="Logo"><div class="gallery-overlay"><div><div class="gallery-caption">BLACK HOLE Logo</div><div class="gallery-tag">Branding</div></div></div></div>
+      <div class="gallery-item" onclick="openLightbox(2)"><img src="BLACK_HOLE_Logo_Transparant.png" alt="Logo Transparant"><div class="gallery-overlay"><div><div class="gallery-caption">Transparant Logo</div><div class="gallery-tag">Design</div></div></div></div>
     </div>
   </div>
 </section>
@@ -443,14 +568,53 @@
       <div class="section-label">Huisregels</div>
       <h2 class="section-title">REGELS</h2>
     </div>
-    <div class="rules-container">
-      <div class="rules-grid">
-        <div class="rule-item reveal"><div class="rule-num">01</div><div class="rule-text">Legitimatie verplicht (18+)</div></div>
-        <div class="rule-item reveal"><div class="rule-num">02</div><div class="rule-text">Geen glaswerk of eigen drank</div></div>
-        <div class="rule-item reveal"><div class="rule-num">03</div><div class="rule-text">Photocamera's toegestaan</div></div>
-        <div class="rule-item reveal"><div class="rule-num">04</div><div class="rule-text">Professionele camera's alleen op aanvraag</div></div>
-        <div class="rule-item reveal"><div class="rule-num">05</div><div class="rule-text">Bij agressief gedrag wordt u verwijderd</div></div>
-        <div class="rule-item reveal"><div class="rule-num">06</div><div class="rule-text">Het dragen van een shirt is verplicht</div></div>
+    <div class="rules-grid" id="rulesGrid">
+      <div class="rule-item reveal" onclick="toggleRule(this)"><div class="rule-check">✓</div><div class="rule-text">Legitimatie verplicht (18+)</div></div>
+      <div class="rule-item reveal" onclick="toggleRule(this)"><div class="rule-check">✓</div><div class="rule-text">Geen glaswerk of eigen drank</div></div>
+      <div class="rule-item reveal" onclick="toggleRule(this)"><div class="rule-check">✓</div><div class="rule-text">Photocamera's toegestaan</div></div>
+      <div class="rule-item reveal" onclick="toggleRule(this)"><div class="rule-check">✓</div><div class="rule-text">Professionele camera's alleen op aanvraag</div></div>
+      <div class="rule-item reveal" onclick="toggleRule(this)"><div class="rule-check">✓</div><div class="rule-text">Bij agressief gedrag wordt u verwijderd</div></div>
+      <div class="rule-item reveal" onclick="toggleRule(this)"><div class="rule-check">✓</div><div class="rule-text">Het dragen van een shirt is verplicht</div></div>
+    </div>
+    <div class="rules-progress reveal">
+      <div class="rules-progress-bar"><div class="rules-progress-fill" id="rulesProgressFill"></div></div>
+      <div class="rules-progress-text" id="rulesProgressText">0 / 6 regels bevestigd</div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="section-container">
+    <div class="section-header reveal">
+      <div class="section-deco"></div>
+      <div class="section-label">Veelgestelde Vragen</div>
+      <h2 class="section-title">FAQ</h2>
+    </div>
+    <div class="faq-container">
+      <div class="faq-item reveal" onclick="toggleFaq(this)">
+        <div class="faq-question"><span class="faq-q-text">Wat is de minimumleeftijd?</span><span class="faq-arrow">▼</span></div>
+        <div class="faq-answer"><div class="faq-a-text">Je moet minimaal 18 jaar oud zijn om het festival te bezoeken. Legitimatie is verplicht aan de deur.</div></div>
+      </div>
+      <div class="faq-item reveal" onclick="toggleFaq(this)">
+        <div class="faq-question"><span class="faq-q-text">Zijn er lockers beschikbaar?</span><span class="faq-arrow">▼</span></div>
+        <div class="faq-answer"><div class="faq-a-text">Ja, er zijn gratis lockers beschikbaar zolang de voorraad strekt. We raden aan om vroeg te komen.</div></div>
+      </div>
+      <div class="faq-item reveal" onclick="toggleFaq(this)">
+        <div class="faq-question"><span class="faq-q-text">Mag ik eten meenemen?</span><span class="faq-arrow">▼</span></div>
+        <div class="faq-answer"><div class="faq-a-text">Nee, eigen eten en drinken is niet toegestaan. Op het terrein zijn diverse foodtrucks aanwezig.</div></div>
+      </div>
+      <div class="faq-item reveal" onclick="toggleFaq(this)">
+        <div class="faq-question"><span class="faq-q-text">Hoe kan ik een ticket kopen?</span><span class="faq-arrow">▼</span></div>
+        <div class="faq-answer"><div class="faq-a-text">Tickets zijn verkrijgbaar via deze website of door de QR code te scannen. Betaal veilig online met iDEAL of creditcard.</div></div>
+      </div>
+      <div class="faq-item reveal" onclick="toggleFaq(this)">
+        <div class="faq-question"><span class="faq-q-text">Is het festival toegankelijk voor mindervaliden?</span><span class="faq-arrow">▼</span></div>
+        <div class="faq-answer"><div class="faq-a-text">Ja, het terrein is rolstoeltoegankelijk. Neem contact op voor speciale voorzieningen.</div></div>
+      </div>
+      <div class="faq-item reveal" onclick="toggleFaq(this)">
+        <div class="faq-question"><span class="faq-q-text">Kan ik mijn ticket annuleren?</span><span class="faq-arrow">▼</span></div>
+        <div class="faq-answer"><div class="faq-a-text">Tickets kunnen tot 7 dagen voor het evenement worden geannuleerd. Neem contact op met onze klantenservice.</div></div>
       </div>
     </div>
   </div>
@@ -465,8 +629,15 @@
       <h2 class="section-title">KOPEN</h2>
     </div>
     <div class="tickets-box reveal">
+      <div class="tickets-remaining">Nog <span class="tickets-remaining-num" id="ticketsRemaining">247</span> tickets beschikbaar</div>
       <div class="tickets-price">&euro; 64,-</div>
       <div class="tickets-per">per persoon &mdash; exclusief servicekosten</div>
+      <div class="ticket-qty">
+        <button class="ticket-qty-btn" onclick="changeQty(-1)">-</button>
+        <div class="ticket-qty-num" id="ticketQty">1</div>
+        <button class="ticket-qty-btn" onclick="changeQty(1)">+</button>
+      </div>
+      <div class="ticket-total">Totaal: <span class="total-price" id="ticketTotal">&euro; 64,-</span></div>
       <ul class="tickets-features">
         <li>Toegang tot het gehele festival</li>
         <li>Incl. welkomstdrankje</li>
@@ -483,33 +654,74 @@
   </div>
 </section>
 
+<!-- NEWSLETTER -->
+<section id="newsletter">
+  <div class="section-container">
+    <div class="newsletter-box reveal">
+      <div class="section-deco" style="margin-bottom:20px"></div>
+      <h2 class="section-title" style="font-size:clamp(24px,4vw,36px);margin-bottom:15px">BLIJF OP DE HOOGTE</h2>
+      <div class="newsletter-desc">Schrijf je in voor onze nieuwsbrief en ontvang als eerste updates over line-up, tickets en meer.</div>
+      <div class="newsletter-form">
+        <input class="newsletter-input" type="email" placeholder="Jouw e-mail adres" id="newsletterEmail">
+        <button class="newsletter-btn" onclick="subscribeNewsletter()">Inschrijven</button>
+      </div>
+      <div class="newsletter-success" id="newsletterSuccess">Bedankt voor je inschrijving!</div>
+    </div>
+  </div>
+</section>
+
 <!-- FOOTER -->
 <footer>
-  <img class="footer-logo" src="BLACK_HOLE_Logo_Transparant.png" alt="BLACK HOLE">
+  <img class="footer-logo" src="BLACK_HOLE_Logo_Transparant.png" alt="BLACK HOLE" onclick="showEasterEgg()">
   <div class="footer-url">www.blackmetal.com</div>
   <div class="footer-socials">@BLACKHOLEFESTIVAL &mdash; #BLACKHOLE2032</div>
+  <div class="share-bar">
+    <a class="share-btn" href="https://www.facebook.com/sharer/sharer.php?u=" target="_blank">f</a>
+    <a class="share-btn" href="https://twitter.com/intent/tweet?text=BLACK%20HOLE%20Festival%202032" target="_blank">X</a>
+    <a class="share-btn" href="https://wa.me/?text=BLACK%20HOLE%20Festival%202032" target="_blank">&#9743;</a>
+    <a class="share-btn" onclick="copyToClipboard(window.location.href)">&#128279;</a>
+  </div>
   <div class="footer-deco"><div class="line"></div><div class="dot"></div><div class="line"></div></div>
   <div class="footer-copy">&copy; 2032 BLACK HOLE Festival. All rights reserved.</div>
 </footer>
 
-<!-- TICKET MODAL -->
+<!-- MODALS -->
 <div class="modal-overlay" id="ticketModal">
   <div class="modal">
-    <button class="modal-close" id="modalClose">&times;</button>
+    <button class="modal-close" onclick="closeModal('ticketModal')">&times;</button>
     <div class="modal-title">Koop Tickets</div>
-    <div class="modal-subtitle">BLACK HOLE Festival &mdash; &euro; 64,-</div>
+    <div class="modal-subtitle" id="modalSubtitle">BLACK HOLE Festival &mdash; &euro; 64,-</div>
     <input class="modal-input" type="text" placeholder="Naam" id="ticketName">
     <input class="modal-input" type="email" placeholder="E-mail" id="ticketEmail">
-    <input class="modal-input" type="number" placeholder="Aantal tickets" min="1" max="10" value="1" id="ticketQty">
-    <button class="modal-submit" id="ticketSubmit">Bevestig Bestelling</button>
-    <div class="modal-success" id="ticketSuccess">Bedankt! Je tickets worden verstuurd.</div>
+    <input class="modal-input" type="tel" placeholder="Telefoonnummer" id="ticketPhone">
+    <button class="modal-submit" onclick="submitTicket()">Bevestig Bestelling</button>
+    <div class="modal-success" id="ticketSuccess">Bedankt! Je tickets worden verstuurd naar je e-mail.</div>
   </div>
 </div>
 
-<!-- BACK TO TOP -->
-<div class="back-to-top" id="backToTop">
+<div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+  <button class="lightbox-close" onclick="closeLightbox(event)">&times;</button>
+  <button class="lightbox-nav lightbox-prev" onclick="navLightbox(-1,event)">&#8249;</button>
+  <button class="lightbox-nav lightbox-next" onclick="navLightbox(1,event)">&#8250;</button>
+  <img id="lightboxImg" src="" alt="">
+  <div class="lightbox-counter" id="lightboxCounter"></div>
+</div>
+
+<div class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">
   <svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
 </div>
+
+<div class="toast" id="toast"></div>
+
+<div class="easter-egg" id="easterEgg" onclick="triggerEasterEgg()">
+  <span style="font-size:20px">🕳️</span>
+  <span class="easter-egg-text">Klik voor een verrassing</span>
+</div>
+
+<!-- AUDIO (hidden) -->
+<audio id="bgAudio" loop preload="none">
+  <source src="data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQAAAAA=" type="audio/wav">
+</audio>
 
 <script>
 // ========== LOADER ==========
@@ -527,18 +739,13 @@ document.addEventListener('mousemove', e => {
 // ========== PARTICLES ==========
 const canvas = document.getElementById('particles-canvas');
 const ctx = canvas.getContext('2d');
-let particles = [];
-function resizeCanvas() {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-}
+let particlesArr = [];
+function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
 resizeCanvas();
 window.addEventListener('resize', resizeCanvas);
 
 class Particle {
-  constructor() {
-    this.reset();
-  }
+  constructor() { this.reset(); }
   reset() {
     this.x = Math.random() * canvas.width;
     this.y = Math.random() * canvas.height;
@@ -549,34 +756,30 @@ class Particle {
     this.color = Math.random() > 0.5 ? '196,30,106' : '155,48,255';
   }
   update() {
-    this.x += this.speedX;
-    this.y += this.speedY;
+    this.x += this.speedX; this.y += this.speedY;
     if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) this.reset();
   }
   draw() {
-    ctx.beginPath();
-    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(${this.color},${this.opacity})`;
-    ctx.fill();
+    ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(${this.color},${this.opacity})`; ctx.fill();
   }
 }
-for (let i = 0; i < 80; i++) particles.push(new Particle());
+for (let i = 0; i < 80; i++) particlesArr.push(new Particle());
 
 function animateParticles() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  particles.forEach(p => { p.update(); p.draw(); });
-  // Draw connections
-  for (let i = 0; i < particles.length; i++) {
-    for (let j = i + 1; j < particles.length; j++) {
-      const dx = particles[i].x - particles[j].x;
-      const dy = particles[i].y - particles[j].y;
+  particlesArr.forEach(p => { p.update(); p.draw(); });
+  for (let i = 0; i < particlesArr.length; i++) {
+    for (let j = i + 1; j < particlesArr.length; j++) {
+      const dx = particlesArr[i].x - particlesArr[j].x;
+      const dy = particlesArr[i].y - particlesArr[j].y;
       const dist = Math.sqrt(dx * dx + dy * dy);
       if (dist < 150) {
         ctx.beginPath();
         ctx.strokeStyle = `rgba(196,30,106,${0.03 * (1 - dist / 150)})`;
         ctx.lineWidth = 0.5;
-        ctx.moveTo(particles[i].x, particles[i].y);
-        ctx.lineTo(particles[j].x, particles[j].y);
+        ctx.moveTo(particlesArr[i].x, particlesArr[i].y);
+        ctx.lineTo(particlesArr[j].x, particlesArr[j].y);
         ctx.stroke();
       }
     }
@@ -585,94 +788,242 @@ function animateParticles() {
 }
 animateParticles();
 
-// ========== NAVIGATION ==========
+// ========== NAV ==========
 const navToggle = document.getElementById('navToggle');
 const navLinks = document.getElementById('navLinks');
-navToggle.addEventListener('click', () => {
-  navToggle.classList.toggle('open');
-  navLinks.classList.toggle('active');
-});
-navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-  navToggle.classList.remove('open');
-  navLinks.classList.remove('active');
-}));
+navToggle.addEventListener('click', () => { navToggle.classList.toggle('open'); navLinks.classList.toggle('active'); });
+navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { navToggle.classList.remove('open'); navLinks.classList.remove('active'); }));
 
-// Active nav link on scroll
 const sections = document.querySelectorAll('section');
 const navItems = document.querySelectorAll('.nav-links a');
 window.addEventListener('scroll', () => {
   let current = '';
-  sections.forEach(s => {
-    if (window.scrollY >= s.offsetTop - 200) current = s.getAttribute('id');
-  });
-  navItems.forEach(a => {
-    a.classList.remove('active');
-    if (a.getAttribute('href') === '#' + current) a.classList.add('active');
-  });
-  // Nav shadow
+  sections.forEach(s => { if (window.scrollY >= s.offsetTop - 200) current = s.getAttribute('id'); });
+  navItems.forEach(a => { a.classList.remove('active'); if (a.getAttribute('href') === '#' + current) a.classList.add('active'); });
   document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
-  // Back to top
   document.getElementById('backToTop').classList.toggle('visible', window.scrollY > 500);
 });
 
-// Back to top
-document.getElementById('backToTop').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+// ========== AUDIO PLAYER ==========
+let audioPlaying = false;
+const audio = document.getElementById('bgAudio');
+const audioPlayer = document.getElementById('audioPlayer');
+audioPlayer.addEventListener('click', () => {
+  audioPlaying = !audioPlaying;
+  audioPlayer.classList.toggle('playing', audioPlaying);
+  if (audioPlaying) audio.play().catch(() => {});
+  else audio.pause();
+  showToast(audioPlaying ? '🔊 Geluid aan' : '🔇 Geluid uit');
+});
 
 // ========== COUNTDOWN ==========
 function updateCountdown() {
   const event = new Date('2032-09-14T19:00:00').getTime();
   const now = new Date().getTime();
   const diff = event - now;
-  if (diff <= 0) {
-    document.getElementById('cd-days').textContent = '000';
-    document.getElementById('cd-hours').textContent = '00';
-    document.getElementById('cd-mins').textContent = '00';
-    document.getElementById('cd-secs').textContent = '00';
-    return;
-  }
-  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-  const secs = Math.floor((diff % (1000 * 60)) / 1000);
-  document.getElementById('cd-days').textContent = String(days).padStart(3, '0');
-  document.getElementById('cd-hours').textContent = String(hours).padStart(2, '0');
-  document.getElementById('cd-mins').textContent = String(mins).padStart(2, '0');
-  document.getElementById('cd-secs').textContent = String(secs).padStart(2, '0');
+  if (diff <= 0) return;
+  const d = Math.floor(diff / 86400000);
+  const h = Math.floor((diff % 86400000) / 3600000);
+  const m = Math.floor((diff % 3600000) / 60000);
+  const s = Math.floor((diff % 60000) / 1000);
+  document.getElementById('cd-days').textContent = String(d).padStart(3, '0');
+  document.getElementById('cd-hours').textContent = String(h).padStart(2, '0');
+  document.getElementById('cd-mins').textContent = String(m).padStart(2, '0');
+  document.getElementById('cd-secs').textContent = String(s).padStart(2, '0');
 }
 updateCountdown();
 setInterval(updateCountdown, 1000);
 
-// ========== REVEAL ON SCROLL ==========
-const reveals = document.querySelectorAll('.reveal');
+// ========== COUNTDOWN CLICK ==========
+document.querySelectorAll('.countdown-item').forEach(item => {
+  item.addEventListener('click', () => showToast('📅 Het festival begint over ' + document.getElementById('cd-days').textContent + ' dagen!'));
+});
+
+// ========== REVEAL ==========
 const revealObserver = new IntersectionObserver((entries) => {
   entries.forEach((entry, i) => {
-    if (entry.isIntersecting) {
-      setTimeout(() => entry.target.classList.add('visible'), i * 100);
-      revealObserver.unobserve(entry.target);
-    }
+    if (entry.isIntersecting) { setTimeout(() => entry.target.classList.add('visible'), i * 80); revealObserver.unobserve(entry.target); }
   });
 }, { threshold: 0.1 });
-reveals.forEach(r => revealObserver.observe(r));
+document.querySelectorAll('.reveal').forEach(r => revealObserver.observe(r));
+
+// ========== LINEUP FILTERS ==========
+document.querySelectorAll('.lineup-filter').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.lineup-filter').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const filter = btn.dataset.filter;
+    document.querySelectorAll('.lineup-item').forEach(item => {
+      if (filter === 'all' || item.dataset.genre === filter) {
+        item.style.display = '';
+        item.style.opacity = '0';
+        item.style.transform = 'translateY(20px)';
+        setTimeout(() => { item.style.opacity = '1'; item.style.transform = 'translateY(0)'; }, 50);
+      } else {
+        item.style.opacity = '0';
+        item.style.transform = 'translateY(-20px)';
+        setTimeout(() => { item.style.display = 'none'; }, 300);
+      }
+    });
+  });
+});
+
+// ========== TICKET QTY ==========
+let ticketQty = 1;
+const PRICE = 64;
+function changeQty(delta) {
+  ticketQty = Math.max(1, Math.min(10, ticketQty + delta));
+  document.getElementById('ticketQty').textContent = ticketQty;
+  document.getElementById('ticketTotal').innerHTML = '&euro; ' + (ticketQty * PRICE) + ',-';
+  // Animate
+  const qtyEl = document.getElementById('ticketQty');
+  qtyEl.style.transform = 'scale(1.3)';
+  setTimeout(() => qtyEl.style.transform = 'scale(1)', 200);
+}
+
+// ========== TICKET REMAINING (simulated) ==========
+let remaining = 247;
+function updateRemaining() {
+  if (remaining > 50 && Math.random() > 0.7) {
+    remaining--;
+    document.getElementById('ticketsRemaining').textContent = remaining;
+    if (remaining <= 50) {
+      document.getElementById('ticketsRemaining').style.color = '#ff4444';
+      showToast('⚠️ Nog maar ' + remaining + ' tickets beschikbaar!');
+    }
+  }
+}
+setInterval(updateRemaining, 15000);
 
 // ========== TICKET MODAL ==========
-const modal = document.getElementById('ticketModal');
-document.getElementById('ticketBtn').addEventListener('click', () => modal.classList.add('active'));
-document.querySelector('.tickets-qr img').addEventListener('click', () => modal.classList.add('active'));
-document.getElementById('modalClose').addEventListener('click', () => modal.classList.remove('active'));
-modal.addEventListener('click', e => { if (e.target === modal) modal.classList.remove('active'); });
-document.getElementById('ticketSubmit').addEventListener('click', () => {
+document.getElementById('ticketBtn').addEventListener('click', () => {
+  document.getElementById('modalSubtitle').innerHTML = 'BLACK HOLE Festival &mdash; ' + ticketQty + 'x &euro; ' + PRICE + ' = <strong>&euro; ' + (ticketQty * PRICE) + ',-</strong>';
+  document.getElementById('ticketModal').classList.add('active');
+});
+document.querySelector('.tickets-qr img').addEventListener('click', () => {
+  document.getElementById('ticketModal').classList.add('active');
+});
+
+function closeModal(id) {
+  document.getElementById(id).classList.remove('active');
+  document.getElementById('ticketSuccess').classList.remove('show');
+}
+document.getElementById('ticketModal').addEventListener('click', e => { if (e.target.id === 'ticketModal') closeModal('ticketModal'); });
+
+function submitTicket() {
   const name = document.getElementById('ticketName').value;
   const email = document.getElementById('ticketEmail').value;
-  if (name && email) {
-    document.getElementById('ticketSuccess').classList.add('show');
-    document.getElementById('ticketSubmit').style.display = 'none';
-    setTimeout(() => {
-      modal.classList.remove('active');
-      document.getElementById('ticketSuccess').classList.remove('show');
-      document.getElementById('ticketSubmit').style.display = '';
-      document.getElementById('ticketName').value = '';
-      document.getElementById('ticketEmail').value = '';
-    }, 3000);
+  if (!name || !email) { showToast('⚠️ Vul alle velden in!'); return; }
+  document.getElementById('ticketSuccess').classList.add('show');
+  document.querySelector('.modal-submit').style.display = 'none';
+  remaining = Math.max(0, remaining - ticketQty);
+  document.getElementById('ticketsRemaining').textContent = remaining;
+  setTimeout(() => { closeModal('ticketModal'); document.querySelector('.modal-submit').style.display = ''; document.getElementById('ticketName').value = ''; document.getElementById('ticketEmail').value = ''; document.getElementById('ticketPhone').value = ''; showToast('🎉 Bedankt ' + name + '! Check je e-mail.'); }, 3000);
+}
+
+// ========== GALLERY / LIGHTBOX ==========
+const galleryImages = ['Afbeelding1.png', 'BLACK_HOLE_Logo.png', 'BLACK_HOLE_Logo_Transparant.png'];
+let currentSlide = 0;
+function openLightbox(i) {
+  currentSlide = i;
+  updateLightbox();
+  document.getElementById('lightbox').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox(e) {
+  if (e.target === document.getElementById('lightbox') || e.target.classList.contains('lightbox-close')) {
+    document.getElementById('lightbox').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+}
+function navLightbox(dir, e) {
+  e.stopPropagation();
+  currentSlide = (currentSlide + dir + galleryImages.length) % galleryImages.length;
+  updateLightbox();
+}
+function updateLightbox() {
+  document.getElementById('lightboxImg').src = galleryImages[currentSlide];
+  document.getElementById('lightboxCounter').textContent = (currentSlide + 1) + ' / ' + galleryImages.length;
+}
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('lightbox').classList.contains('active')) return;
+  if (e.key === 'Escape') { document.getElementById('lightbox').classList.remove('active'); document.body.style.overflow = ''; }
+  if (e.key === 'ArrowLeft') navLightbox(-1, e);
+  if (e.key === 'ArrowRight') navLightbox(1, e);
+});
+
+// ========== RULES CHECKLIST ==========
+function toggleRule(el) {
+  el.classList.toggle('checked');
+  updateRulesProgress();
+}
+function updateRulesProgress() {
+  const total = document.querySelectorAll('.rule-item').length;
+  const checked = document.querySelectorAll('.rule-item.checked').length;
+  document.getElementById('rulesProgressFill').style.width = (checked / total * 100) + '%';
+  document.getElementById('rulesProgressText').textContent = checked + ' / ' + total + ' regels bevestigd';
+  if (checked === total) showToast('🎉 Je hebt alle regels bevestigd! Goed voorbereid!');
+}
+
+// ========== FAQ ==========
+function toggleFaq(el) {
+  const wasOpen = el.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(f => f.classList.remove('open'));
+  if (!wasOpen) el.classList.add('open');
+}
+
+// ========== NEWSLETTER ==========
+function subscribeNewsletter() {
+  const email = document.getElementById('newsletterEmail').value;
+  if (!email || !email.includes('@')) { showToast('⚠️ Vul een geldig e-mail adres in!'); return; }
+  document.getElementById('newsletterSuccess').classList.add('show');
+  document.getElementById('newsletterEmail').value = '';
+  showToast('📧 Bedankt voor je inschrijving!');
+  setTimeout(() => document.getElementById('newsletterSuccess').classList.remove('show'), 4000);
+}
+
+// ========== TOAST ==========
+function showToast(msg) {
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 3000);
+}
+
+// ========== COPY TO CLIPBOARD ==========
+function copyToClipboard(text) {
+  navigator.clipboard.writeText(text).then(() => showToast('📋 Gekopieerd naar clipboard!')).catch(() => showToast('📋 Kopieer: ' + text));
+}
+
+// ========== EASTER EGG ==========
+let logoClicks = 0;
+function showEasterEgg() {
+  logoClicks++;
+  if (logoClicks >= 5) {
+    document.getElementById('easterEgg').classList.add('visible');
+    showToast('🕳️ Je hebt een geheim gevonden!');
+    logoClicks = 0;
+  }
+}
+let easterActive = false;
+function triggerEasterEgg() {
+  easterActive = !easterActive;
+  document.body.style.filter = easterActive ? 'hue-rotate(180deg) saturate(2)' : '';
+  showToast(easterActive ? '🌀 Matrix mode ACTIVATED!' : '🔄 Terug naar normaal');
+  if (easterActive) setTimeout(() => { easterActive = false; document.body.style.filter = ''; }, 5000);
+}
+
+// ========== KONAMI CODE ==========
+let konamiSequence = [];
+const konamiCode = [38,38,40,40,37,39,37,39,66,65];
+document.addEventListener('keydown', e => {
+  konamiSequence.push(e.keyCode);
+  if (konamiSequence.length > 10) konamiSequence.shift();
+  if (JSON.stringify(konamiSequence) === JSON.stringify(konamiCode)) {
+    document.body.style.animation = 'rainbow 3s linear';
+    showToast('🎮 KONAMI CODE! Je bent een legende!');
+    setTimeout(() => document.body.style.animation = '', 3000);
+    konamiSequence = [];
   }
 });
 
@@ -683,6 +1034,17 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
     const target = document.querySelector(a.getAttribute('href'));
     if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
+});
+
+// ========== 3D TILT EFFECT ON CARDS ==========
+document.querySelectorAll('.info-card, .lineup-card, .tickets-box').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const rect = card.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    card.style.transform = `perspective(1000px) rotateY(${x * 8}deg) rotateX(${-y * 8}deg) translateY(-5px)`;
+  });
+  card.addEventListener('mouseleave', () => { card.style.transform = ''; });
 });
 </script>
 </body>
